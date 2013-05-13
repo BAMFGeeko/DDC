@@ -1,0 +1,78 @@
+import org.newdawn.slick.*;
+import org.newdawn.slick.util.FontUtils;
+import org.newdawn.slick.command.*;
+
+/**
+ * Base class for menus
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public abstract class MenuBase
+{
+    /**
+     * Renders the menu on the screen.
+     * 
+     * @pre None
+     * @param gameContainer The game container
+     * @param graphics The graphics class
+     * @return void
+     * @post None
+     */
+    public abstract void render(GameContainer gameContainer, Graphics graphics);
+    
+    /**
+     * Renders the menu on the screen.
+     * 
+     * @pre None
+     * @param gameContainer The game container
+     * @param graphics The graphics class
+     * @return void
+     * @post None
+     */
+    public abstract void update(GameContainer gameContainer, int intDelta);
+    
+    /**
+     * A command has been pressed when this is called.
+     * 
+     * @pre None
+     * @param command The command that was pressed.
+     * @return void
+     * @post None
+     */
+    public abstract void controlPressed(Keys key);
+    
+    /**
+     * Called when the menu has been set as the current menu.
+     * 
+     * @pre None
+     * @param None
+     * @return Void
+     * @post None
+     */
+    public abstract void onSet();
+    
+    /**
+     * Called when the menu has been unset.
+     * 
+     * @pre None
+     * @param None
+     * @return Void
+     * @post None
+     */
+    public abstract void onUnset();
+    
+    /**
+     * Removes the menu from the render list in the MainMenuController.
+     * This should only be called from the onUnset() method.
+     * 
+     * @pre None
+     * @param None
+     * @return Void
+     * @post The menu has been removed from the render list.
+     */
+    protected void removeFromRenderList()
+    {
+        MainMenuController.removeFromRenderList(this);
+    } //End removeFromRenderList method
+} //End interface
