@@ -1,0 +1,51 @@
+import org.newdawn.slick.*;
+
+/**
+ * A basic slime enemy.
+ * 
+ * @author Gerrit Jamerson, CodeMonkeys
+ * @version 4/3/13
+ */
+public class EnemySlime extends EnemyObject
+{
+    public EnemySlime()
+    {
+        super("EnemySlime");
+    }
+
+    /**
+     * Called each step on singleplayer
+     * Implementation TBD
+     */
+    public void spStep(GameContainer gameContainer, int intDelta)
+    {
+
+    }
+
+    /**
+     * Called each step on the client in multiplayer
+     * Implementation TBD
+     */
+    public void mpClientStep(GameContainer gameContainer, int intDelta)
+    {
+
+    }
+
+    /**
+     * Called each step on the server
+     * Implementation TBD
+     */
+    public void mpServerStep(GameContainer gameContainer, int intDelta)
+    {
+
+    }
+
+    /**
+     * Called each frame, used to draw the gameObject
+     * Implementation TBD
+     */
+    public void render(GameContainer gameContainer, Graphics graphics)
+    {
+
+    }
+}
