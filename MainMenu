@@ -1,0 +1,158 @@
+import org.newdawn.slick.*;
+import org.newdawn.slick.util.FontUtils;
+
+/**
+ * Handles the MainMenu
+ * 
+ * @author Gerrit Jamerson, CodeMonkeys
+ * @version 4/5/13
+ */
+public class MainMenu extends MenuBase
+{
+    private static int curSelection = 0;
+    private int SPSetupMenuID;
+    private int SettingsMenuID;
+    private float intTargetX;
+    private Vector2I Offset;
+    
+    /**
+     * Constructs the MainMenu
+     */
+    public MainMenu()
+    {
+        Offset = new Vector2I(0,0);
+        Offset.x = Settings.getResolutionX() / 2;
+        Offset.y = Settings.getResolutionY() / 2;
+        SPSetupMenuID = MainMenuController.registerMenu(new SPSetupMenu());
+        SettingsMenuID = MainMenuController.registerMenu(new SettingsMenu());
+    } //End constructor
+    
+    /**
+     * Renders the menu on the screen.
+     * 
+     * @pre None
+     * @param gameContainer The game container
+     * @param graphics The graphics class
+     * @return void
+     * @post None
+     */
+    public void update(GameContainer gameContainer, int intDelta)
+    {
+        Offset.x = Settings.getResolutionX() / 2;
+        Offset.y = Settings.getResolutionY() / 2;
+    } // End update method
+    
+    /**
+     * Renders the menu on the screen.
+     * 
+     * @pre None
+     * @param gameContainer The game container
+     * @param graphics The graphics class
+     * @return void
+     * @post None
+     */
+    public void render(GameContainer gameContainer, Graphics graphics)
+    {
+        TrueTypeFont ttf = GameRegistry.getFont("fntMain");
+        FontUtils.drawCenter(ttf, "Dungeon Crawler", Offset.x, Offset.y - 200, 0, Color.white);
+
+        String[] prefix = new String[3];
+        String[] suffix = new String[3];
+
+        for(int i = 0; i < 3; i++)
+        {
+            prefix[i] = "";
+            suffix[i] = "";
+
+            if(i == curSelection)
+            {
+                prefix[i] = "[ ";
+                suffix[i] = " ]";
+            } //End if
+        } //End for loop
+
+        FontUtils.drawCenter(ttf, prefix[0] + "Play" + suffix[0], Offset.x, Offset.y - 40, 0, Color.white);
+        FontUtils.drawCenter(ttf, prefix[1] + "Settings" + suffix[1], Offset.x, Offset.y, 0, Color.white);
+        FontUtils.drawCenter(ttf, prefix[2] + "Exit" + suffix[2], Offset.x, Offset.y + 40, 0, Color.white);
+    } //End render method
+
+    /**
+     * A command has been pressed when this is called.
+     * 
+     * @pre None
+     * @param command The command that was pressed.
+     * @return void
+     * @post None
+     */
+    public void controlPressed(Keys command)
+    {
+        switch(command)
+        {
+            case UP:
+            curSelection--;
+            break;
+
+            case DOWN:
+            curSelection++;
+            break;
+
+            case SELECT:
+            switch(curSelection)
+            {
+                case 0:
+                //MainMenuController.setMenu(SPSetupMenuID);
+                GameController.startGame(GameController.GameType.SINGLEPLAYER);
+                break;
+
+                case 1:
+                MainMenuController.setMenu(SettingsMenuID);
+                break;
+
+                case 2:
+                GameController.exitGame();
+                break;
+            } //End switch
+            break;
+
+            case BACK:
+            GameController.exitGame();
+            break;
+        } //End switch
+
+        if(curSelection < 0)
+        {
+            curSelection = 2;
+        } //End if
+
+        if(curSelection > 2)
+        {
+            curSelection = 0;
+        } //End if
+    } //End command method
+
+    /**
+     * Called when the menu has been set as the current menu.
+     * 
+     * @pre None
+     * @param None
+     * @return Void
+     * @post None
+     */
+    public void onSet()
+    {
+        
+    } //End onSet method
+
+    /**
+     * Called when the menu has been unset.
+     * 
+     * @pre None
+     * @param None
+     * @return Void
+     * @post None
+     */
+    public void onUnset()
+    {
+        removeFromRenderList();
+    } //End onUnset method
+} //End class
